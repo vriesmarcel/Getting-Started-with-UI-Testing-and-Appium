@@ -45,10 +45,13 @@ jobs:
       
     - name: download pfx for signing
       run: |
+            $sb = [System.Text.StringBuilder]::new()
+            [void]$sb.Append("${{ secrets.Base64_Encoded_Pfx }}" )
             $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-            $secret = ${{secrets.PFX_PWD}} 
-            Write-Host $secret
-            Write-Host ${{ secrets.Base64_Encoded_Pfx }}
+            $sb2 = [System.Text.StringBuilder]::new()
+            [void]$sb2.Append("${{secrets.PFX_PWD}}" )
+            Write-Host $sb.ToString()
+            Write-Host $sb2.ToString()
             $currentDirectory = Get-Location
             $certificatePath = [System.IO.Path]::Combine($currentDirectory, $env:Wap_Project_Directory, $env:signingcertificate)
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
