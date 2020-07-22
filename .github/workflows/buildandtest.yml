@@ -55,8 +55,8 @@ jobs:
             $currentDirectory = Get-Location
             $certificatePath = [System.IO.Path]::Combine($currentDirectory, $env:Wap_Project_Directory, $env:signingcertificate)
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-            [IO.File]::WriteAllBytes("secretbase64.txt", $sb.ToString())
-            [IO.File]::WriteAllBytes("pwd.txt", $sb2.ToString())
+            [IO.File]::WriteAllText("secretbase64.txt", $sb.ToString())
+            [IO.File]::WriteAllText("pwd.txt", $sb2.ToString())
             
             Write-Host $certificatePath
             Write-Host ${{github.workspace}}\${{env.Wap_Project_Directory}}\${{env.signingcertificate}}
