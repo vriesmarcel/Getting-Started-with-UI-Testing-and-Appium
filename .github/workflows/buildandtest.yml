@@ -46,6 +46,9 @@ jobs:
     - name: download pfx for signing
       run: |
             $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+            $secret = ${{secrets.PFX_PWD}} 
+            Write-Host $secret
+            Write-Host ${{ secrets.Base64_Encoded_Pfx }}
             $currentDirectory = Get-Location
             $certificatePath = [System.IO.Path]::Combine($currentDirectory, $env:Wap_Project_Directory, $env:signingcertificate)
             [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
